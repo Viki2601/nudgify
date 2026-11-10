@@ -1,6 +1,6 @@
 {
   "name": "nudgify",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Lightweight nudge notifications",
   "main": "index.js",
   "scripts": {
@@ -15,6 +15,15 @@
   ],
   "author": "Vishnu",
   "license": "ISC",
+  "homepage": "https://viki2601.github.io/nudgify/",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/viki2601/nudgify.git"
+  },
+  "bugs": {
+    "url": "https://github.com/viki2601/nudgify/issues"
+  },
+  "sideEffects": false,
   "type": "module",
   "files": [
     "index.js",

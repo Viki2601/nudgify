@@ -5,9 +5,9 @@ Lightweight, customizable notifications for the web. A small API, five visual st
 [![npm version](https://img.shields.io/npm/v/nudgify.svg)](https://www.npmjs.com/package/nudgify)
 [![license](https://img.shields.io/npm/l/nudgify.svg)](#license)
 
-**[▶ Try the playground](https://YOUR-SITE.example/playground.html)** ·
-[Docs](https://YOUR-SITE.example/index.html) ·
-[About](https://YOUR-SITE.example/about.html)
+**[▶ Try the playground](https://viki2601.github.io/nudgify/playground.html)** ·
+[Docs](https://viki2601.github.io/nudgify/index.html) ·
+[About](https://viki2601.github.io/nudgify/about.html)
 
 The playground lets you tweak every option and copy the generated code.
 
@@ -68,7 +68,7 @@ nudge.success("Your changes have been saved!", {
 
 ### 5. Explore in the playground
 
-Open the **[playground](https://YOUR-SITE.example/playground.html)**, adjust positions, styles, animations and actions, then use **Copy snippet** to paste the code into your project.
+Open the **[playground](https://viki2601.github.io/nudgify/playground.html)**, adjust positions, styles, animations and actions, then use **Copy snippet** to paste the code into your project.
 
 ## Styles
 
@@ -76,15 +76,15 @@ Choose a look with the `variant` option.
 
 | Classic (`default`)                                            | Soft (`soft`)                                            |
 | -------------------------------------------------------------- | -------------------------------------------------------- |
-| ![Classic style](https://YOUR-SITE.example/images/Classic.png) | ![Soft style](https://YOUR-SITE.example/images/Soft.png) |
+| ![Classic style](https://viki2601.github.io/nudgify/images/Classic.png) | ![Soft style](https://viki2601.github.io/nudgify/images/Soft.png) |
 
 | Solid (`solid`)                                            | Outlined (`outline`)                                             |
 | ---------------------------------------------------------- | ---------------------------------------------------------------- |
-| ![Solid style](https://YOUR-SITE.example/images/Solid.png) | ![Outlined style](https://YOUR-SITE.example/images/Outlined.png) |
+| ![Solid style](https://viki2601.github.io/nudgify/images/Solid.png) | ![Outlined style](https://viki2601.github.io/nudgify/images/Outlined.png) |
 
 | Glass (`glass`)                                            |
 | ---------------------------------------------------------- |
-| ![Glass style](https://YOUR-SITE.example/images/Glass.png) |
+| ![Glass style](https://viki2601.github.io/nudgify/images/Glass.png) |
 
 | Variant   | Description                                                                 |
 | --------- | --------------------------------------------------------------------------- |
@@ -116,7 +116,7 @@ Add buttons or links inside a nudge with the `actions` option. Activating an act
 
 ### One button
 
-![A nudge with a single button](https://YOUR-SITE.example/images/Informatic.png)
+![A nudge with a single button](https://viki2601.github.io/nudgify/images/Informatic.png)
 
 ```js
 nudge.info("We use cookies to improve your experience.", {
@@ -127,7 +127,7 @@ nudge.info("We use cookies to improve your experience.", {
 
 ### Two buttons
 
-![A nudge with Yes and No buttons](https://YOUR-SITE.example/images/With_Action.png)
+![A nudge with Yes and No buttons](https://viki2601.github.io/nudgify/images/With_Action.png)
 
 ```js
 nudge("Do you want to continue?", {
@@ -149,7 +149,7 @@ nudge("Do you want to continue?", {
 
 ### A link
 
-![A nudge with a link button](https://YOUR-SITE.example/images/Redirection.png)
+![A nudge with a link button](https://viki2601.github.io/nudgify/images/Redirection.png)
 
 ```js
 nudge.warning("A new version is available.", {
@@ -247,7 +247,7 @@ These are ideas, not promises or release dates.
 - Integration guidance for popular front-end setups
 - Ongoing fixes and documentation updates
 
-Have feedback or an idea? Use the contact link on the [About page](https://YOUR-SITE.example/about.html).
+Have feedback or an idea? Use the contact link on the [About page](https://viki2601.github.io/nudgify/about.html).
 
 ## License
 
