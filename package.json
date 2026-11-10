@@ -1,0 +1,23 @@
+{
+  "name": "nudgify",
+  "version": "1.0.2",
+  "description": "Lightweight nudge notifications",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "nudge",
+    "notification",
+    "snackbar",
+    "ui",
+    "javascript"
+  ],
+  "author": "Vishnu",
+  "license": "ISC",
+  "type": "module",
+  "files": [
+    "index.js",
+    "styles.js"
+  ]
+}

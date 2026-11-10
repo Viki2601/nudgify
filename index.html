@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="en" data-page-theme="system">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#ffffff">
+    <title>Docs · Nudgify</title>
+    <style>
+        :root {
+            color-scheme: light;
+            font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            color: #111;
+            background: #fff;
+            --bg: #fff;
+            --surface: #fafafa;
+            --text: #111;
+            --muted: #666;
+            --line: #e5e5e5;
+            --hover: #f0f0f0;
+            --code: #f5f5f5;
+            --code-text: #1f1f1f;
+            --code-keyword: #0000ff;
+            --code-string: #a31515;
+            --code-number: #098658;
+            --code-function: #795e26;
+            --code-property: #0451a5;
+            --code-comment: #008000;
+            --code-punctuation: #555;
+            --code-command: #795e26;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root[data-page-theme="system"] {
+                color-scheme: dark;
+                color: #f5f5f5;
+                background: #050505;
+                --bg: #050505;
+                --surface: #111;
+                --text: #f5f5f5;
+                --muted: #aaa;
+                --line: #292929;
+                --hover: #242424;
+                --code: #111;
+                --code-text: #d4d4d4;
+                --code-keyword: #c586c0;
+                --code-string: #ce9178;
+                --code-number: #b5cea8;
+                --code-function: #dcdcaa;
+                --code-property: #9cdcfe;
+                --code-comment: #6a9955;
+                --code-punctuation: #d4d4d4;
+                --code-command: #4ec9b0;
+            }
+        }
+
+        :root[data-page-theme="dark"] {
+            color-scheme: dark;
+            color: #f5f5f5;
+            background: #050505;
+            --bg: #050505;
+            --surface: #111;
+            --text: #f5f5f5;
+            --muted: #aaa;
+            --line: #292929;
+            --hover: #242424;
+            --code: #111;
+            --code-text: #d4d4d4;
+            --code-keyword: #c586c0;
+            --code-string: #ce9178;
+            --code-number: #b5cea8;
+            --code-function: #dcdcaa;
+            --code-property: #9cdcfe;
+            --code-comment: #6a9955;
+            --code-punctuation: #d4d4d4;
+            --code-command: #4ec9b0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+            scrollbar-width: none;
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        body::-webkit-scrollbar,
+        .docs-content::-webkit-scrollbar,
+        .installation-sidebar::-webkit-scrollbar {
+            display: none;
+            width: 0;
+            height: 0;
+        }
+
+        .topbar {
+            position: sticky;
+            top: 0;
+            z-index: 2;
+            display: flex;
+            min-height: 72px;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            padding: 12px clamp(16px, 4vw, 56px);
+            border-bottom: 1px solid var(--line);
+            background: color-mix(in srgb, var(--bg) 94%, transparent);
+            backdrop-filter: blur(14px);
+        }
+
+        .brand {
+            color: var(--text);
+            font-size: 22px;
+            font-weight: 760;
+            letter-spacing: -.4px;
+            text-decoration: none;
+        }
+
+        .top-actions,
+        .site-nav {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .page-theme-button {
+            display: grid;
+            width: 36px;
+            height: 36px;
+            flex: none;
+            place-items: center;
+            border: 1px solid var(--line);
+            border-radius: 50%;
+            background: var(--surface);
+            color: var(--muted);
+            cursor: pointer;
+        }
+
+        .page-theme-button:hover {
+            background: var(--hover);
+            color: var(--text);
+        }
+
+        .page-theme-button:focus-visible {
+            outline: 2px solid var(--text);
+            outline-offset: 2px;
+        }
+
+        .page-theme-button svg {
+            display: none;
+            width: 17px;
+            height: 17px;
+            fill: none;
+            stroke: currentColor;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            stroke-width: 1.7;
+        }
+
+        .page-theme-button[data-theme="system"] .icon-system,
+        .page-theme-button[data-theme="light"] .icon-sun,
+        .page-theme-button[data-theme="dark"] .icon-moon {
+            display: block;
+        }
+
+        .site-nav a,
+        .npm-link {
+            padding: 9px 11px;
+            border-radius: 8px;
+            color: var(--muted);
+            font-size: 12px;
+            font-weight: 650;
+            text-decoration: none;
+        }
+
+        .site-nav a:hover,
+        .site-nav a[aria-current="page"] {
+            background: var(--hover);
+            color: var(--text);
+        }
+
+        .npm-link {
+            border: 1px solid var(--line);
+            border-radius: 24px;
+        }
+
+        main {
+            display: grid;
+            grid-template-columns: minmax(0, 2fr) minmax(320px, 2fr);
+            align-items: start;
+            gap: clamp(24px, 4vw, 26px);
+            width: min(1400px, calc(100% - 40px));
+            height: calc(100vh - 72px);
+            margin: 0 auto;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .docs-content {
+            min-width: 0;
+            height: 100%;
+            overflow-y: auto;
+            padding: 20px clamp(12px, 2vw, 28px) 48px 0;
+            scrollbar-width: none;
+        }
+
+        .installation-sidebar {
+            position: sticky;
+            top: 24px;
+            align-self: start;
+            width: 100%;
+            min-width: 0;
+            max-height: 100%;
+            overflow-y: auto;
+            padding: 20px;
+            border: 1px solid var(--line);
+            /* border-radius: 14px; */
+            background: var(--surface);
+            scrollbar-width: none;
+        }
+
+        .installation-sidebar h2 {
+            margin-bottom: 8px;
+        }
+
+        .installation-sidebar > p {
+            margin: 0;
+            font-size: 13px;
+        }
+
+        .installation-sidebar .install-steps {
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .eyebrow {
+            color: var(--muted);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 12px 0;
+            font-size: clamp(38px, 7vw, 64px);
+            letter-spacing: -3px;
+            line-height: 1.05;
+        }
+
+        .lead {
+            max-width: 650px;
+            color: var(--muted);
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 28px 0 56px;
+        }
+
+        .button {
+            display: inline-flex;
+            padding: 11px 16px;
+            border: 1px solid var(--line);
+            border-radius: 9px;
+            color: var(--text);
+            font-size: 13px;
+            font-weight: 650;
+            text-decoration: none;
+        }
+
+        section {
+            padding: 28px 0;
+            border-top: 1px solid var(--line);
+            scroll-margin-top: 20px;
+        }
+
+        h2 {
+            margin: 0 0 12px;
+            font-size: 23px;
+            letter-spacing: -.6px;
+        }
+
+        p,
+        li {
+            color: var(--muted);
+            line-height: 1.7;
+        }
+
+        code,
+        pre {
+            font-family: "SFMono-Regular", Consolas, monospace;
+        }
+
+        pre {
+            overflow-x: auto;
+            padding: 18px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: var(--code);
+            color: var(--code-text);
+            line-height: 1.7;
+        }
+
+        pre code {
+            white-space: pre;
+        }
+
+        .syntax-keyword { color: var(--code-keyword); }
+        .syntax-string { color: var(--code-string); }
+        .syntax-number { color: var(--code-number); }
+        .syntax-function { color: var(--code-function); }
+        .syntax-property { color: var(--code-property); }
+        .syntax-comment { color: var(--code-comment); }
+        .syntax-punctuation { color: var(--code-punctuation); }
+        .syntax-command { color: var(--code-command); }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+        }
+
+        .feature {
+            padding: 16px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: var(--surface);
+        }
+
+        .feature h3 {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .feature p {
+            margin-bottom: 0;
+            font-size: 13px;
+        }
+
+        .install-steps {
+            display: grid;
+            gap: 14px;
+            margin-top: 22px;
+        }
+
+        .install-step {
+            padding: 14px;
+            border: 1px solid var(--line);
+            border-radius: 12px;
+            background: var(--surface);
+        }
+
+        .install-step h3 {
+            margin: 0 0 10px;
+            font-size: 13px;
+        }
+
+        .install-step p {
+            margin: 0 0 10px;
+            color: var(--muted);
+            line-height: 1.65;
+        }
+
+        .install-step pre {
+            margin: 0;
+            overflow-x: auto;
+            padding: 11px;
+            border: 1px solid var(--line);
+            border-radius: 9px;
+            background: var(--code);
+            color: var(--code-text);
+            line-height: 1.65;
+        }
+
+        .install-step code {
+            font-family: "SFMono-Regular", Consolas, monospace;
+        }
+
+        @media (max-width: 850px) {
+            body {
+                height: auto;
+                min-height: 100vh;
+                overflow: auto;
+            }
+
+            main {
+                display: flex;
+                align-items: stretch;
+                height: auto;
+                min-height: calc(100vh - 72px);
+                flex-direction: column;
+                overflow: visible;
+            }
+
+            .docs-content {
+                height: auto;
+                overflow: visible;
+                padding: 20px 0 32px;
+            }
+
+            .installation-sidebar {
+                position: static;
+                max-height: none;
+                overflow: visible;
+            }
+        }
+
+        @media (max-width: 600px) {
+            body {
+                height: auto;
+                min-height: 100vh;
+                overflow: auto;
+            }
+
+            .topbar {
+                min-height: 62px;
+                gap: 8px;
+                padding: 8px 12px;
+            }
+
+            .brand {
+                font-size: 19px;
+            }
+
+            .top-actions,
+            .site-nav {
+                gap: 0;
+            }
+
+            .site-nav a {
+                padding: 8px 6px;
+                font-size: 11px;
+            }
+
+            .page-theme-button {
+                width: 32px;
+                height: 32px;
+            }
+
+            .npm-link {
+                display: none;
+            }
+
+            main {
+                display: flex;
+                height: auto;
+                min-height: calc(100vh - 62px);
+                flex-direction: column;
+                gap: 20px;
+                overflow: visible;
+                padding: 32px 0 48px;
+            }
+
+            .docs-content {
+                height: auto;
+                overflow: visible;
+                padding: 0 0 20px;
+            }
+
+            .installation-sidebar {
+                position: static;
+                max-height: none;
+                overflow: visible;
+            }
+
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .topbar {
+                gap: 4px;
+                padding-right: 8px;
+                padding-left: 8px;
+            }
+
+            .brand {
+                font-size: 17px;
+            }
+
+            .site-nav a {
+                padding-right: 3px;
+                padding-left: 3px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="topbar">
+        <a class="brand" href="index.html">Nudgify</a>
+        <div class="top-actions">
+            <nav class="site-nav" aria-label="Main navigation">
+                <a href="index.html" aria-current="page">Docs</a>
+                <a href="playground.html">Playground</a>
+                <a href="about.html">About</a>
+            </nav>
+            <button class="page-theme-button" id="page-theme" type="button" data-theme="system"
+                aria-label="Page theme: System. Click to switch to Light." title="Page theme: System">
+                <svg class="icon-system" viewBox="0 0 24 24" aria-hidden="true">
+                    <rect x="3" y="4" width="18" height="13" rx="2"></rect>
+                    <path d="M8 21h8M12 17v4"></path>
+                </svg>
+                <svg class="icon-sun" viewBox="0 0 24 24" aria-hidden="true">
+                    <circle cx="12" cy="12" r="4"></circle>
+                    <path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"></path>
+                </svg>
+                <svg class="icon-moon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M20.2 15.4A8.5 8.5 0 0 1 8.6 3.8 8.5 8.5 0 1 0 20.2 15.4Z"></path>
+                </svg>
+            </button>
+            <a class="npm-link" href="https://www.npmjs.com/package/nudgify" target="_blank" rel="noreferrer">npm
+                package</a>
+        </div>
+    </header>
+    <main>
+        <article class="docs-content" aria-label="Nudgify documentation">
+        <div class="eyebrow">Documentation</div>
+        <h1>Nudges,<br>without the fuss.</h1>
+        <p class="lead">Nudgify is a lightweight notification library for the web. Add clear, customizable updates
+            to your app with a small API and flexible styles.</p>
+        <div class="hero-actions">
+            <a class="button" href="playground.html">Open the playground</a>
+        </div>
+        <section>
+            <h2>Quick example</h2>
+            <pre><code>import { nudge } from "nudgify";
+
+nudge.success("Your changes have been saved!", {
+  position: "top-right",
+  animation: "slide-up",
+  duration: 4000,
+});</code></pre>
+            <p>Use <code>nudge.info()</code>, <code>nudge.success()</code>, <code>nudge.warning()</code>, or
+                <code>nudge.error()</code>. The default <code>nudge(message, options)</code> creates an info nudge.
+            </p>
+        </section>
+        <section>
+            <h2>Customize your notifications</h2>
+            <div class="feature-grid">
+                <article class="feature">
+                    <h3>Positions &amp; styles</h3>
+                    <p>Choose from six screen positions and default, soft, solid, outline, or glass variants.</p>
+                </article>
+                <article class="feature">
+                    <h3>Motion controls</h3>
+                    <p>Slide in any direction, flip, fade, scale, or bounce. Adjust animation duration and easing.</p>
+                </article>
+                <article class="feature">
+                    <h3>Interactive actions</h3>
+                    <p>Add callback buttons or safe links directly inside notifications.</p>
+                </article>
+                <article class="feature">
+                    <h3>Expandable stacks</h3>
+                    <p>Opt into overlapping stacks that expand on hover or keyboard focus.</p>
+                </article>
+            </div>
+        </section>
+        <section>
+            <h2>Options</h2>
+            <ul>
+                <li><code>position</code>: top/bottom left, center, or right.</li>
+                <li><code>animation</code>: slide, slide-up/down/left/right, flip, fade, scale, or bounce.</li>
+                <li><code>animationDuration</code> (milliseconds) and <code>animationEasing</code> (linear, ease,
+                    ease-in, ease-out, ease-in-out, or spring).</li>
+                <li><code>variant</code>: default, soft, solid, outline, or glass; <code>theme</code>: light, dark, or
+                    auto.</li>
+                <li><code>duration</code> in milliseconds (0 keeps a nudge open), <code>borderRadius</code> in pixels,
+                    <code>icon</code>, and <code>closable</code>.
+                </li>
+                <li><code>stack: true</code> overlaps notifications at the same position; defaults to false.</li>
+            </ul>
+        </section>
+        <section>
+            <h2>Nudge actions</h2>
+            <p>Buttons accept an <code>onClick</code> callback; links accept an <code>href</code> using http, https, or
+                mailto. Actions dismiss the nudge when activated.</p>
+            <pre><code>nudge("Do you want to continue?", {
+  duration: 0,
+  actions: [
+    { label: "Yes", onClick: () =&gt; confirmAction() },
+    { label: "Learn more", href: "https://example.com" },
+  ],
+});</code></pre>
+        </section>
+        </article>
+        <aside class="installation-sidebar" id="installation" aria-labelledby="installation-heading">
+            <h2 id="installation-heading">Installation</h2>
+            <p>Install Nudgify with your preferred package manager, then import the nudge API in your app.</p>
+            <div class="install-steps">
+                <article class="install-step">
+                    <h3>1. Install the package</h3>
+                    <pre><code>npm install nudgify
+# or
+pnpm add nudgify
+# or
+yarn add nudgify</code></pre>
+                </article>
+                <article class="install-step">
+                    <h3>2. Import and show a nudge</h3>
+                    <pre><code>import { nudge } from "nudgify";
+
+nudge.success("You're all set!");</code></pre>
+                    <p>Available types are <code>nudge.info()</code>, <code>nudge.success()</code>, <code>nudge.warning()</code>, and <code>nudge.error()</code>.</p>
+                </article>
+                <article class="install-step">
+                    <h3>3. Customize it</h3>
+                    <pre><code>nudge.success("Profile saved", {
+  position: "top-right",
+  animation: "slide-up",
+  animationDuration: 350,
+  animationEasing: "ease-out",
+  duration: 4000,
+});</code></pre>
+                </article>
+            </div>
+        </aside>
+    </main>
+    <script>
+        const codeTokenPattern = /\/\/.*|#.*|"(?:\\.|[^"\\])*"|'(?:\\.|[^'\\])*'|`(?:\\.|[^`\\])*`|\b(?:import|from|const|let|var|return|new|true|false|null|undefined|async|await)\b|\b\d+(?:\.\d+)?\b|\bnudge(?:\.(?:success|info|warning|error))?\b|\b(?:npm|pnpm|yarn|install|add)\b|[A-Za-z_$][\w$]*(?=\s*:)|[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*)*(?=\s*\()|[{}()[\].,:;=]/g;
+
+        function highlightCode(codeElement) {
+            const source = codeElement.textContent;
+            const fragment = document.createDocumentFragment();
+            let offset = 0;
+
+            for (const match of source.matchAll(codeTokenPattern)) {
+                if (match.index > offset) fragment.append(document.createTextNode(source.slice(offset, match.index)));
+                const token = match[0];
+                const tokenElement = document.createElement("span");
+                if (/^(["'`])/.test(token)) tokenElement.className = "syntax-string";
+                else if (/^(\/\/|#)/.test(token)) tokenElement.className = "syntax-comment";
+                else if (/^(import|from|const|let|var|return|new|async|await)$/.test(token)) tokenElement.className = "syntax-keyword";
+                else if (/^(true|false|null|undefined)$/.test(token)) tokenElement.className = "syntax-keyword";
+                else if (/^\d/.test(token)) tokenElement.className = "syntax-number";
+                else if (/^nudge(?:\.(?:success|info|warning|error))?$/.test(token) && /^\(/.test(source.slice(match.index + token.length).trimStart())) tokenElement.className = "syntax-function";
+                else if (/^[A-Za-z_$][\w$]*$/.test(token) && /^\s*:/.test(source.slice(match.index + token.length))) tokenElement.className = "syntax-property";
+                else if (/^[A-Za-z_$][\w$]*(?:\.[A-Za-z_$][\w$]*)*$/.test(token) && /\($/.test(source.slice(match.index + token.length).trimStart())) tokenElement.className = "syntax-function";
+                else if (/^[{}()[\].,:;=]$/.test(token)) tokenElement.className = "syntax-punctuation";
+                else if (/^(npm|pnpm|yarn|install|add)$/.test(token)) tokenElement.className = "syntax-command";
+                tokenElement.textContent = token;
+                fragment.append(tokenElement);
+                offset = match.index + token.length;
+            }
+
+            if (offset < source.length) fragment.append(document.createTextNode(source.slice(offset)));
+            codeElement.replaceChildren(fragment);
+        }
+
+        document.querySelectorAll("pre > code").forEach(highlightCode);
+
+        const pageTheme = document.getElementById("page-theme");
+        const themeColor = document.querySelector('meta[name="theme-color"]');
+
+        function applyPageTheme(theme) {
+            document.documentElement.dataset.pageTheme = theme;
+            const nextTheme = { system: "light", light: "dark", dark: "system" }[theme];
+            const themeName = theme[0].toUpperCase() + theme.slice(1);
+            const nextThemeName = nextTheme[0].toUpperCase() + nextTheme.slice(1);
+            pageTheme.dataset.theme = theme;
+            pageTheme.setAttribute("aria-label", `Page theme: ${themeName}. Click to switch to ${nextThemeName}.`);
+            pageTheme.title = `Page theme: ${themeName}`;
+            const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+            themeColor.content = theme === "dark" || (theme === "system" && prefersDark) ? "#050505" : "#ffffff";
+        }
+
+        pageTheme.addEventListener("click", () => {
+            const nextTheme = { system: "light", light: "dark", dark: "system" }[pageTheme.dataset.theme];
+            applyPageTheme(nextTheme);
+        });
+        window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+            if (pageTheme.dataset.theme === "system") applyPageTheme("system");
+        });
+        applyPageTheme("system");
+    </script>
+</body>
+
+</html>
